@@ -1,19 +1,6 @@
 import { assert } from 'chai';
 import bubbleSort from '../scripts/bubbleSort';
-
-
-function genRandomNumberArray(count) {
-  let numbers = [];
-  let max = 1000;
-
-  for (let i = 0; i < count; i++) {
-    let randomNumber = Math.floor(Math.random() * max);
-
-    numbers.push(randomNumber);
-  }
-  return numbers;
-}
-let randomArray = genRandomNumberArray(10);
+import genRandomNumberArray from '../scripts/genRanArray'
 
 describe('TDD with bubbleSort', () => {
 
@@ -38,13 +25,26 @@ describe('TDD with bubbleSort', () => {
   })
 
   it('should sort a random array', () => {
+    let newArray = genRandomNumberArray(1000)
 
-  let newArray = genRandomNumberArray(1000)
-
-  bubbleSort(newArray);
-  assert.equal(newArray[0] <= newArray[1], true)
-  assert.equal(newArray[Math.floor(newArray.length / 2)] <= newArray[Math.floor(newArray.length / 2) + 1], true)
-  assert.equal(newArray[newArray.length - 1] >= newArray[newArray.length - 2], true)
+    bubbleSort(newArray);
+    assert.equal(newArray[0] <= newArray[1], true)
+    assert.equal(newArray[Math.floor(newArray.length / 2)] <= newArray[Math.floor(newArray.length / 2) + 1], true)
+    assert.equal(newArray[newArray.length - 1] >= newArray[newArray.length - 2], true)
   })
 
+  it('should sort large numbers', () => {
+    let array = [ 500, 343, 234, 342, 221 ]
+
+    assert.equal(array[0] > array[1], true);
+    bubbleSort(array);
+    assert.equal(array[0] < array[1], true);
+  })
+
+  it('should sort negative numbers', () => {
+    let array = [ -5, -3, -4, -2, -1 ]
+
+    bubbleSort(array);
+    assert.equal(array[0] <= array[1], true)
+  })
 })
